@@ -5,6 +5,6 @@ WORKDIR /usr/src/app/
 COPY disp/requirements.txt ./
 RUN pip install --index-url=https://www.piwheels.org/simple --no-cache-dir -r requirements.txt
 
-COPY disp .
+COPY disp/disp.py .
 
 CMD ["python", "disp.py"]
