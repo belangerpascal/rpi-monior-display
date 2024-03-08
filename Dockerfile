@@ -1,9 +1,9 @@
 FROM python:3.9-alpine
 
-WORKDIR /usr/src/app/
+WORKDIR /opt/app/
 
-COPY /usr/src/app/disp/requirements.txt ./
-COPY /usr/src/app/disp/disp.py ./
+COPY /app/requirements.txt ./
+COPY /app/disp.py ./
 RUN pip install -r requirements.txt
 
 
