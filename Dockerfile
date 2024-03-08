@@ -1,10 +1,10 @@
 FROM python:3.9-alpine
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src/app/
 
-COPY controller/requirements.txt ./
+COPY disp/requirements.txt ./
 RUN pip install --index-url=https://www.piwheels.org/simple --no-cache-dir -r requirements.txt
 
-COPY controller .
+COPY disp .
 
-CMD ["python", "controller.py"]
+CMD ["python", "disp.py"]
