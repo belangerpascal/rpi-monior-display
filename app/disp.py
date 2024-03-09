@@ -5,7 +5,7 @@
 from collections import deque
 import psutil
 # Blinka CircuitPython
-#import board
+import board
 #import digitalio
 #import adafruit_rgb_display.ili9341 as ili9341
 # Matplotlib
