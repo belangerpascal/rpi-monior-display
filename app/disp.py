@@ -1,8 +1,4 @@
-# SPDX-FileCopyrightText: 2019 Carter Nelson for Adafruit Industries
-#
-# SPDX-License-Identifier: MIT
-
-from collections import deque
+rom collections import deque
 import psutil
 # Blinka CircuitPython
 import board
@@ -12,6 +8,7 @@ from adafruit_rgb_display import st7789
 import matplotlib.pyplot as plt
 # Python Imaging Library
 from PIL import Image
+import time
 
 #pylint: disable=bad-continuation
 #==| User Config |========================================================
@@ -39,29 +36,25 @@ PLOT_CONFIG = (
     'ylim' : (20, 50),
     'line_config' : (
         {'color' : '#FF0000', 'width' : 2},
-        {'color' : '#FF3000', 'width' : 2},
-        {'color' : '#FF8000', 'width' : 2},
-        {'color' : '#Ff0080', 'width' : 2},
         )
     }
 )
 
-CPU_COUNT = 4
+CPU_COUNT = 1
 
 def update_data():
     ''' Do whatever to update your data here. General form is:
            y_data[plot][line].append(new_data_point)
     '''
     cpu_percs = psutil.cpu_percent(interval=REFRESH_RATE, percpu=True)
-    for cpu in range(CPU_COUNT):
-        y_data[0][cpu].append(cpu_percs[cpu])
+    print(cpu_percs)
+    y_data[0].append(cpu_percs)
 
     cpu_temps = []
-    for shwtemp in psutil.sensors_temperatures()['coretemp']:
-        if 'Core' in shwtemp.label:
-            cpu_temps.append(shwtemp.current)
-    for cpu in range(CPU_COUNT):
-        y_data[1][cpu].append(cpu_temps[cpu])
+    for shwtemp in psutil.sensors_temperatures()['cpu_thermal']:
+        cpu_temps.append(shwtemp.current)
+    print(cpu_temps)
+    y_data[1].append(cpu_temps)
 
 #==| User Config |========================================================
 #pylint: enable=bad-continuation
@@ -76,11 +69,11 @@ y_data = [ [deque([None] * HIST_SIZE, maxlen=HIST_SIZE) for _ in plot['line_conf
          ]
 
 # Setup display
-disp = st7789.ST7789(board.SPI(), height=240, width=280,  y_offset=80, rotation=180, 
-                       baudrate = 10000000,
-                       cs  = digitalio.DigitalInOut(board.CE0),
-                       dc  = digitalio.DigitalInOut(board.D25),
-                       rst = digitalio.DigitalInOut(board.D24))
+disp = st7789.ST7789(board.SPI(), height=280, width=240, y_offset=20, rotation=0,
+                     baudrate=40000000,
+                     cs=digitalio.DigitalInOut(board.CE0),
+                     dc=digitalio.DigitalInOut(board.D25),
+                     rst=digitalio.DigitalInOut(board.D27))
 
 # Setup plot figure
 plt.style.use('dark_background')
