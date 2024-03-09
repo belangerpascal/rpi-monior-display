@@ -3,4 +3,8 @@ matplotlib
 Pillow
 board
 Adafruit_Blinka
-RPi.GPIO
+gpiod
+numpy
+digitalio
+adafruit_rgb_display
+gpiod
