@@ -4,7 +4,7 @@ WORKDIR /opt/app/
 
 COPY /app/requirements.txt ./
 COPY /app/disp.py ./
-RUN apk add --no-cache make
+RUN apk add --no-cache make gcc
 RUN pip install -r requirements.txt
 
 
