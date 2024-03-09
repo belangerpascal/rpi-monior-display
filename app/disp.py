@@ -6,8 +6,8 @@ from collections import deque
 import psutil
 # Blinka CircuitPython
 import board
-#import digitalio
-#import adafruit_rgb_display.ili9341 as ili9341
+import digitalio
+from adafruit_rgb_display import st7789
 # Matplotlib
 import matplotlib.pyplot as plt
 # Python Imaging Library
@@ -76,10 +76,11 @@ y_data = [ [deque([None] * HIST_SIZE, maxlen=HIST_SIZE) for _ in plot['line_conf
          ]
 
 # Setup display
-disp = ili9341.ILI9341(board.SPI(), baudrate = 24000000,
-                       cs  = digitalio.DigitalInOut(board.D4),
-                       dc  = digitalio.DigitalInOut(board.D5),
-                       rst = digitalio.DigitalInOut(board.D6))
+disp = st7789.ST7789(board.SPI(), height=240, width=280,  y_offset=80, rotation=180, 
+                       baudrate = 10000000,
+                       cs  = digitalio.DigitalInOut(board.CE0),
+                       dc  = digitalio.DigitalInOut(board.D25),
+                       rst = digitalio.DigitalInOut(board.D24))
 
 # Setup plot figure
 plt.style.use('dark_background')
