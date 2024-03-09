@@ -2,3 +2,4 @@ psutil
 matplotlib
 Pillow
 board
+Adafruit_Blinka
