@@ -1,4 +1,4 @@
-FROM python:3.9-ubuntu
+FROM python:3.9-alpine
 
 WORKDIR /opt/app/
 
