@@ -1,10 +1,9 @@
-version: "3.7"
-
+version: "3.8"
 services:
-  monitor:
-    build:
-      context: .
-      dockerfile: Dockerfile
-
+  display-monitor:
+    container_name: display-monitor
+    image: ghcr.io/belangerpascal/rpi-monior-display:latest 
     volumes:
-      - ./:/app
+      - /proc:/proc
+      - /lib/modules:/lib/modules
+      - /sys:/sys
