@@ -1,4 +1,5 @@
 FROM python:3.9
+LABEL org.opencontainers.image.source https://github.com/belangerpascal/rpi-monitor-display
 
 WORKDIR /opt/app/
 
