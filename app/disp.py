@@ -5,9 +5,9 @@
 from collections import deque
 import psutil
 # Blinka CircuitPython
-import board
-import digitalio
-import adafruit_rgb_display.ili9341 as ili9341
+#import board
+#import digitalio
+#import adafruit_rgb_display.ili9341 as ili9341
 # Matplotlib
 import matplotlib.pyplot as plt
 # Python Imaging Library
