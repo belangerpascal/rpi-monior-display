@@ -125,8 +125,12 @@ def update_plot():
     # transfer into PIL image
     image = Image.frombytes('RGBA', canvas.get_width_height(), canvas.buffer_rgba())
 
-    # display the image using draw method (handles resizing)
-    disp.draw(image)
+    # Resize image if necessary
+    if image.size != (disp.width, disp.height):
+        image = image.resize((disp.width, disp.height))
+
+    # display the image
+    disp.image(image)
 
     # update the plot after displaying the image
     for plot, lines in enumerate(plot_lines):
@@ -138,6 +142,7 @@ def update_plot():
             ax[plot].autoscale_view()
     plt.draw()
     print("Plot Updated")
+
 
 
 
