@@ -112,6 +112,7 @@ def update_data():
                 if not (limit_min <= float(data_point) <= limit_max):
                     print(f"Warning: Data point {data_point} is outside the y-axis limits for Plot {plot + 1}, Line {index + 1}")
                     print(f"Y-axis limits: {limit_min} to {limit_max}")
+
 def update_plot():
     # update lines with the latest data
     for plot, lines in enumerate(plot_lines):
@@ -126,8 +127,8 @@ def update_plot():
 
     # Ensure the image does not exceed display dimensions
     if image.width > disp.width or image.height > disp.height:
-        # Resize the image to the display dimensions
-        image = image.resize((disp.width, disp.height), Image.ANTIALIAS)
+        # Crop the image to the display dimensions
+        image = image.crop((0, 0, disp.width, disp.height))
 
     disp.image(image)
 
@@ -141,6 +142,7 @@ def update_plot():
             ax[plot].autoscale_view()
     plt.draw()
     print("Plot Updated")
+
 
 
 
