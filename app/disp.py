@@ -125,9 +125,12 @@ def update_plot():
     # transfer into PIL image
     original_image = Image.frombytes('RGBA', canvas.get_width_height(), canvas.buffer_rgba())
 
-    # Create a new image with the display dimensions
+    # Create a new image with the exact display dimensions
     new_image = Image.new('RGBA', (disp.width, disp.height), (0, 0, 0, 255))
     new_image.paste(original_image, (0, 0))
+
+    # Resize the image to exactly match the display dimensions
+    new_image = new_image.resize((disp.width, disp.height))
 
     disp.image(new_image)
 
