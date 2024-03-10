@@ -125,6 +125,9 @@ def update_plot():
     # transfer into PIL image
     image = Image.frombytes('RGBA', canvas.get_width_height(), canvas.buffer_rgba())
 
+    # Print image size for debugging
+    print(f"Image Size: {image.width}x{image.height}, Display Size: {disp.width}x{disp.height}")
+
     # Ensure the image does not exceed display dimensions
     if image.width > disp.width or image.height > disp.height:
         image = image.resize((disp.width, disp.height))
@@ -142,6 +145,7 @@ def update_plot():
             ax[plot].autoscale_view()
     plt.draw()
     print("Plot Updated")
+
 
 
 
