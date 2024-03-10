@@ -2,7 +2,8 @@ import sys
 import psutil
 import board
 import digitalio
-import pygame
+import matplotlib.pyplot as plt
+from PIL import Image, ImageDraw
 from adafruit_rgb_display.st7789 import ST7789
 from collections import deque
 from gpiozero import Device
@@ -55,19 +56,9 @@ disp = ST7789(
     rst=digitalio.DigitalInOut(board.D27)
 )
 
-# Initialize pygame
-pygame.init()
-
-# Create a pygame window
-window = pygame.display.set_mode((disp.width, disp.height))
-
-# Set up plot lines
-plot_lines = []
-for plot, config in enumerate(PLOT_CONFIG):
-    lines = []
-    for index, line_config in enumerate(config['line_config']):
-        lines.append(pygame.draw.aaline(window, line_config['color'], (0, 0), (0, 0), line_config['width']))
-    plot_lines.append(lines)
+# Create an image buffer
+image = Image.new("RGB", (disp.width, disp.height))
+draw = ImageDraw.Draw(image)
 
 def update_data():
     # Update data
@@ -91,31 +82,32 @@ def update_data():
                     print(f"Y-axis limits: {limit_min} to {limit_max}")
 
 def update_plot():
-    # update lines with the latest data
-    for plot, lines in enumerate(plot_lines):
-        for index, line in enumerate(lines):
+    # Clear the image
+    draw.rectangle([(0, 0), image.size], fill=(0, 0, 0))
+
+    # Update lines with the latest data
+    for plot, config in enumerate(PLOT_CONFIG):
+        for index, line_config in enumerate(config['line_config']):
             data = y_data[plot][index]
             if None not in data:
                 avg_data = sum(data) / len(data)
-                pygame.draw.aaline(window, PLOT_CONFIG[plot]['line_config'][index]['color'],
-                                   (x_time[0], avg_data), (x_time[-1], avg_data),
-                                   PLOT_CONFIG[plot]['line_config'][index]['width'])
-    pygame.display.flip()
+                color = line_config['color']
+                width = line_config['width']
+                points = [(x_time[i], avg_data) for i in range(len(x_time))]
+                draw.line(points, fill=color, width=width)
+
+    # Display the updated image
+    disp.image(image)
 
 try:
     print("Looping")
     while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
-
         update_data()
         update_plot()
         sys.stdout.flush()
 except KeyboardInterrupt:
     print("Loop interrupted by user.")
 finally:
-    pygame.quit()
     if Device.pin_factory is not None:
         Device.pin_factory.reset()
     print("Exiting program.")
