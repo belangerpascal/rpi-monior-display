@@ -154,7 +154,8 @@ try:
     while True:
         update_data()
         update_plot()
-        sys.stdout.flush()  # Moved it here
+        sys.stdout.flush()
+        plt.pause(0.05)
 except KeyboardInterrupt:
     print("Loop interrupted by user.")
 finally:
