@@ -125,27 +125,36 @@ def update_plot():
     # transfer into PIL image
     image = Image.frombytes('RGBA', canvas.get_width_height(), canvas.buffer_rgba())
 
-    # Print image size for debugging
-    print(f"Original Image Size: {image.width}x{image.height}, Display Size: {disp.width}x{disp.height}")
-
     # Ensure the image does not exceed display dimensions
     if image.width > disp.width or image.height > disp.height:
-        new_image = image.resize((disp.width, disp.height), Image.BICUBIC)
-        print(f"Resized Image Size: {new_image.width}x{new_image.height}, Display Size: {disp.width}x{disp.height}")
+        # Resize image while maintaining the aspect ratio
+        ratio = min(disp.width / image.width, disp.height / image.height)
+        new_size = (int(image.width * ratio), int(image.height * ratio))
+        new_image = image.resize(new_size, Image.BICUBIC)
 
-        # display the resized image
-        disp.image(new_image)
+        # Create a blank image with display dimensions
+        display_image = Image.new("RGBA", (disp.width, disp.height), (0, 0, 0, 0))
 
-        # update the plot after displaying the image
-        for plot, lines in enumerate(plot_lines):
-            for index, line in enumerate(lines):
-                line.set_ydata(y_data[plot][index])
-            # autoscale if not specified
-            if 'ylim' not in PLOT_CONFIG[plot].keys():
-                ax[plot].relim()
-                ax[plot].autoscale_view()
-        plt.draw()
-        print("Plot Updated")
+        # Paste the resized image onto the blank image
+        offset = ((disp.width - new_image.width) // 2, (disp.height - new_image.height) // 2)
+        display_image.paste(new_image, offset)
+
+        # display the image
+        disp.image(display_image)
+    else:
+        disp.image(image)
+
+    # update the plot after displaying the image
+    for plot, lines in enumerate(plot_lines):
+        for index, line in enumerate(lines):
+            line.set_ydata(y_data[plot][index])
+        # autoscale if not specified
+        if 'ylim' not in PLOT_CONFIG[plot].keys():
+            ax[plot].relim()
+            ax[plot].autoscale_view()
+    plt.draw()
+    print("Plot Updated")
+
 
 
 try:
