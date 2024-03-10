@@ -9,7 +9,7 @@ from PIL import Image
 from gpiozero import Device
 
 # User Config
-REFRESH_RATE = 0.5
+REFRESH_RATE = 0.05
 HIST_SIZE = 61
 PLOT_CONFIG = [
     {
