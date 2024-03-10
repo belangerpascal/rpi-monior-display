@@ -122,14 +122,18 @@ def update_plot():
         if 'ylim' not in PLOT_CONFIG[plot].keys():
             ax[plot].relim()
             ax[plot].autoscale_view()
+
     # draw the plots
     canvas = plt.get_current_fig_manager().canvas
     plt.tight_layout()
     canvas.draw()
-    # transfer into PIL image and display
-    image = Image.frombytes('RGB', canvas.get_width_height(),
-                            canvas.tostring_rgb())
+
+    # transfer into PIL image
+    image = Image.frombytes('RGB', canvas.get_width_height(), canvas.tostring_rgb())
+
+    # display on ST7789
     disp.image(image)
+    disp.show()
 
 MAX_ITERATIONS = 1000
 iteration_count = 0
