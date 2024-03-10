@@ -127,10 +127,7 @@ def update_plot():
 
     # Create a new image with the exact display dimensions
     new_image = Image.new('RGBA', (disp.width, disp.height), (0, 0, 0, 255))
-    new_image.paste(original_image, (0, 0))
-
-    # Resize the image to exactly match the display dimensions
-    new_image = new_image.resize((disp.width, disp.height))
+    new_image.paste(original_image.crop((0, 0, disp.width, disp.height)), (0, 0))
 
     disp.image(new_image)
 
