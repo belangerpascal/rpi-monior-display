@@ -134,7 +134,7 @@ def update_plot():
     new_image.paste(image, ((disp.width - image.width) // 2, (disp.height - image.height) // 2))
 
     # Resize the new image to match the display dimensions
-    new_image = new_image.resize((disp.width, disp.height), Image.ANTIALIAS)
+    new_image = new_image.resize((disp.width, disp.height), Image.BICUBIC)
 
     # display the image
     disp.image(new_image)
@@ -149,14 +149,6 @@ def update_plot():
             ax[plot].autoscale_view()
     plt.draw()
     print("Plot Updated")
-
-
-
-
-
-
-
-
 
 try:
     print("Looping")
