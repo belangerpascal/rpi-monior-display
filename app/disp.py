@@ -122,6 +122,10 @@ def update_plot():
     canvas = plt.get_current_fig_manager().canvas
     plt.tight_layout()
     canvas.draw()
+
+    # force a redraw of the entire figure
+    plt.draw()
+
     # transfer into PIL image
     original_image = Image.frombytes('RGBA', canvas.get_width_height(), canvas.buffer_rgba())
 
@@ -139,8 +143,8 @@ def update_plot():
         if 'ylim' not in PLOT_CONFIG[plot].keys():
             ax[plot].relim()
             ax[plot].autoscale_view()
-    plt.draw()
     print("Plot Updated")
+
 
 try:
     print("Looping")
