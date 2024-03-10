@@ -1,4 +1,4 @@
-rom collections import deque
+from collections import deque
 import psutil
 # Blinka CircuitPython
 import board
