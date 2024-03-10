@@ -100,26 +100,21 @@ def update_data():
     y_data[1].append(cpu_temps)
 
 def update_plot():
-    # Update lines with the latest data
+    # update lines with latest data
     for plot, lines in enumerate(plot_lines):
         for index, line in enumerate(lines):
             line.set_ydata(y_data[plot][index])
-        # Autoscale if not specified
-        if 'ylim' not in PLOT_CONFIG[plot]:
+        # autoscale if not specified
+        if 'ylim' not in PLOT_CONFIG[plot].keys():
             ax[plot].relim()
             ax[plot].autoscale_view()
-
-    # Redraw the lines
-    for line in sum(plot_lines, []):
-        line.figure.canvas.draw()
-
-    # Transfer into PIL image
+    # draw the plots
     canvas = plt.get_current_fig_manager().canvas
-    image = Image.frombytes('RGB', canvas.get_width_height(), canvas.tostring_rgb())
-
-    # Display on ST7789
+    plt.tight_layout()
+    canvas.draw()
+    # transfer into PIL image and display
+    image = Image.frombytes('RGBA', canvas.get_width_height(), canvas.buffer_rgba())
     disp.image(image)
-    disp.show()
 
 MAX_ITERATIONS = 1000
 iteration_count = 0
@@ -133,5 +128,6 @@ try:
 except KeyboardInterrupt:
     print("Loop interrupted by user.")
 finally:
-    Device.pin_factory.reset()
+    if Device.pin_factory is not None:
+        Device.pin_factory.reset()
     print("Exiting program.")
