@@ -1,5 +1,4 @@
 from collections import deque
-import sys
 import psutil
 import board
 import digitalio
@@ -113,7 +112,6 @@ def update_data():
 
     sys.stdout.flush()
 
-
 def update_plot():
     # update lines with latest data
     for plot, lines in enumerate(plot_lines):
@@ -130,23 +128,10 @@ def update_plot():
     # transfer into PIL image and display
     image = Image.frombytes('RGBA', canvas.get_width_height(), canvas.buffer_rgba())
     print("Plot Updated")
-    print(f"Image Dimensions: {image.size}")
-    sys.stdout.flush()  # Flush the output buffer
     disp.image(image)
-
-MAX_ITERATIONS = 1000
-iteration_count = 0
 
 try:
     print("Looping")
-    while iteration_count < MAX_ITERATIONS:
+    while True:
         update_data()
-        update_plot()
-        print(iteration_count)
-        iteration_count += 1
-except KeyboardInterrupt:
-    print("Loop interrupted by user.")
-finally:
-    if Device.pin_factory is not None:
-        Device.pin_factory.reset()
-    print("Exiting program.")
+        update
