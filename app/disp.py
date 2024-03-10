@@ -99,6 +99,7 @@ def update_data():
 
     cpu_temps = [shwtemp.current for shwtemp in psutil.sensors_temperatures().get('cpu_thermal', [])]
     y_data[1].append(cpu_temps)
+
     # Print statements for debugging
     print(f"CPU Percentages: {cpu_percs}")
     print(f"CPU Temperatures: {cpu_temps}")
@@ -106,7 +107,7 @@ def update_data():
     # Check if data is within y-axis limits
     for plot, limits in enumerate(PLOT_CONFIG):
         if 'ylim' in limits:
-            for index, data_point in enumerate([cpu_percs, cpu_temps]):
+            for index, data_point in enumerate([cpu_percs, cpu_temps[index]]):
                 if not limits['ylim'][0] <= data_point <= limits['ylim'][1]:
                     print(f"Warning: Data point {data_point} is outside the y-axis limits for Plot {plot + 1}, Line {index + 1}")
 
