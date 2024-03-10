@@ -1,4 +1,5 @@
 from collections import deque
+import sys
 import psutil
 import board
 import digitalio
