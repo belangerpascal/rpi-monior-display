@@ -126,18 +126,10 @@ def update_plot():
 
     # Ensure the image does not exceed display dimensions
     if image.width > disp.width or image.height > disp.height:
-        # Resize the image while maintaining its aspect ratio
-        ratio = min(disp.width / image.width, disp.height / image.height)
-        new_width = int(image.width * ratio)
-        new_height = int(image.height * ratio)
-        new_image = image.resize((new_width, new_height), Image.ANTIALIAS)
-        # Create a blank image with the display dimensions
-        final_image = Image.new("RGBA", (disp.width, disp.height), (0, 0, 0, 0))
-        # Paste the resized image at the center
-        final_image.paste(new_image, ((disp.width - new_width) // 2, (disp.height - new_height) // 2))
-        disp.image(final_image)
-    else:
-        disp.image(image)
+        # Resize the image to the display dimensions
+        image = image.resize((disp.width, disp.height), Image.ANTIALIAS)
+
+    disp.image(image)
 
     # update the plot after displaying the image
     for plot, lines in enumerate(plot_lines):
@@ -149,6 +141,7 @@ def update_plot():
             ax[plot].autoscale_view()
     plt.draw()
     print("Plot Updated")
+
 
 
 
