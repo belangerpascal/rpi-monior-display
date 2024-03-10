@@ -97,7 +97,8 @@ def update_plot():
                 draw.line(points, fill=color, width=width)
 
     # Display the updated image
-    disp.display(image)
+    disp.show(image)
+
 
 
 try:
