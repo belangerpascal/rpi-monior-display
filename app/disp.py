@@ -136,9 +136,13 @@ iteration_count = 0
 try:
     print("looping")
     while iteration_count < MAX_ITERATIONS:
-        update_data()
-        update_plot()
-        iteration_count += 1
+        try:
+            update_data()
+            update_plot()
+            iteration_count += 1
+        except AttributeError as e:
+            print(f"AttributeError: {e}")
+            print("Ignoring and continuing...")
 except KeyboardInterrupt:
     print("Loop interrupted by user.")
 finally:
