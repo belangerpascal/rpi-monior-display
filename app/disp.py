@@ -122,12 +122,16 @@ def update_plot():
     canvas = plt.get_current_fig_manager().canvas
     plt.tight_layout()
     canvas.draw()
-    # transfer into PIL image and display
+    # transfer into PIL image
     image = Image.frombytes('RGBA', canvas.get_width_height(), canvas.buffer_rgba())
+    
     # Resize image if necessary
     if image.size != (disp.width, disp.height):
         image = image.resize((disp.width, disp.height))
+    
+    # display the image
     disp.image(image)
+    
     # update plot after displaying image
     for plot, lines in enumerate(plot_lines):
         for index, line in enumerate(lines):
@@ -138,6 +142,7 @@ def update_plot():
             ax[plot].autoscale_view()
     plt.draw()
     print("Plot Updated")
+
 
 try:
     print("Looping")
