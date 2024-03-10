@@ -134,4 +134,10 @@ try:
     print("Looping")
     while True:
         update_data()
-        update
+        update_plot()
+except KeyboardInterrupt:
+    print("Loop interrupted by user.")
+finally:
+    if Device.pin_factory is not None:
+        Device.pin_factory.reset()
+    print("Exiting program.")
