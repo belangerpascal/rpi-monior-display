@@ -77,17 +77,17 @@ for plot, a in enumerate(ax):
 plot_lines = []
 for plot, config in enumerate(PLOT_CONFIG):
     lines = []
-    for line_config in config['line_config']:
-        # Create line
+    for index, line_config in enumerate(config['line_config']):
+        # create line
         line, = ax[plot].plot(x_time, y_data[plot][index])
-        # Custom settings
+        # custom settings
         if 'color' in line_config:
             line.set_color(line_config['color'])
         if 'width' in line_config:
             line.set_linewidth(line_config['width'])
         if 'style' in line_config:
             line.set_linestyle(line_config['style'])
-        # Add line to list
+        # add line to list
         lines.append(line)
     plot_lines.append(lines)
 
