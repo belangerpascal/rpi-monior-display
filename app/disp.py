@@ -123,12 +123,12 @@ def update_plot():
             ax[plot].relim()
             ax[plot].autoscale_view()
 
-    # draw the plots
-    canvas = plt.get_current_fig_manager().canvas
-    plt.tight_layout()
-    canvas.draw()
+    # redraw the lines
+    for line in sum(plot_lines, []):
+        line.figure.canvas.draw()
 
     # transfer into PIL image
+    canvas = plt.get_current_fig_manager().canvas
     image = Image.frombytes('RGB', canvas.get_width_height(), canvas.tostring_rgb())
 
     # display on ST7789
