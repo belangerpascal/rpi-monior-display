@@ -118,10 +118,6 @@ def update_plot():
     for plot, lines in enumerate(plot_lines):
         for index, line in enumerate(lines):
             line.set_ydata(y_data[plot][index])
-        # autoscale if not specified
-        if 'ylim' not in PLOT_CONFIG[plot].keys():
-            ax[plot].relim()
-            ax[plot].autoscale_view()
     # draw the plots
     canvas = plt.get_current_fig_manager().canvas
     plt.tight_layout()
@@ -131,8 +127,17 @@ def update_plot():
     # Resize image if necessary
     if image.size != (disp.width, disp.height):
         image = image.resize((disp.width, disp.height))
-    print("Plot Updated")
     disp.image(image)
+    # update plot after displaying image
+    for plot, lines in enumerate(plot_lines):
+        for index, line in enumerate(lines):
+            line.set_ydata(y_data[plot][index])
+        # autoscale if not specified
+        if 'ylim' not in PLOT_CONFIG[plot].keys():
+            ax[plot].relim()
+            ax[plot].autoscale_view()
+    plt.draw()
+    print("Plot Updated")
 
 try:
     print("Looping")
