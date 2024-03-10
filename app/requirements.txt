@@ -6,4 +6,3 @@ board
 gpiod
 numpy
 gpiozero
-time
