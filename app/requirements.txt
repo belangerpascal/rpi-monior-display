@@ -5,5 +5,3 @@ board
 Adafruit_Blinka
 gpiod
 numpy
-adafruit_rgb_display
-gpiod
