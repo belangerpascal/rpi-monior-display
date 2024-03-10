@@ -1,8 +1,9 @@
 psutil
-matplotlib
+#matplotlib
 Pillow
 adafruit-circuitpython-rgb-display
 board
 gpiod
 numpy
 gpiozero
+pygame
