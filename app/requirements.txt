@@ -1,7 +1,7 @@
 psutil
 matplotlib
 Pillow
-adafruit_st7789
+Adafruit_CircuitPython_ST7789
 board
 gpiod
 numpy
