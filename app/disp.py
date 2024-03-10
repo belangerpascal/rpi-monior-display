@@ -46,10 +46,10 @@ y_data = [
 # Setup display
 disp = ST7789(
     board.SPI(),
-    height=280,
-    width=240,
+    height=240,
+    width=280,
     y_offset=20,
-    rotation=0,
+    rotation=90,
     baudrate=40000000,
     cs=digitalio.DigitalInOut(board.CE0),
     dc=digitalio.DigitalInOut(board.D25),
@@ -111,6 +111,7 @@ def update_data():
                 limit_min, limit_max = limits['ylim']
                 if not (limit_min <= float(data_point) <= limit_max):
                     print(f"Warning: Data point {data_point} is outside the y-axis limits for Plot {plot + 1}, Line {index + 1}")
+                    print(f"Y-axis limits: {limit_min} to {limit_max}")
 
 def update_plot():
     # update lines with latest data
