@@ -96,8 +96,13 @@ def update_plot():
                 points = [(x_time[i], avg_data) for i in range(len(x_time))]
                 draw.line(points, fill=color, width=width)
 
+    # Create a new image with the correct dimensions
+    new_image = Image.new('RGB', (disp.width, disp.height), (0, 0, 0))
+    new_image.paste(image, (20, 0))  # Paste the original image with an offset
+
     # Display the updated image
-    disp.image(image, rotation=90, x_offset=20, y_offset=0)
+    disp.image(new_image)
+
 
 
 
