@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 # Python Imaging Library
 from PIL import Image
 import time
+from gpiozero import Device
 
 #pylint: disable=bad-continuation
 #==| User Config |========================================================
@@ -146,4 +147,5 @@ try:
 except KeyboardInterrupt:
     print("Loop interrupted by user.")
 finally:
+    Device.pin_factory.reset()
     print("Exiting program.")

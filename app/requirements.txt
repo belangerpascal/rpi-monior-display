@@ -5,3 +5,4 @@ adafruit-circuitpython-rgb-display
 board
 gpiod
 numpy
+gpiozero
