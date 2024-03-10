@@ -1,6 +1,7 @@
 psutil
 matplotlib
 Pillow
+adafruit_st7789
 board
 gpiod
 numpy

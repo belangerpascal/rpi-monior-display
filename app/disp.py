@@ -3,7 +3,7 @@ import psutil
 # Blinka CircuitPython
 import board
 import digitalio
-from adafruit_rgb_display import st7789
+from adafruit_st7789 import ST7789
 # Matplotlib
 import matplotlib.pyplot as plt
 # Python Imaging Library
