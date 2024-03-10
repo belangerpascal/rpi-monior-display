@@ -130,8 +130,15 @@ def update_plot():
                             canvas.tostring_rgb())
     disp.image(image)
 
+MAX_ITERATIONS = 1000
+iteration_count = 0
+
 print("looping")
-while True:
+while iteration_count < MAX_ITERATIONS:
     update_data()
     update_plot()
-    # update rate controlled by psutil.cpu_percent()
+    iteration_count += 1
+    # Add a delay to control the update rate
+    time.sleep(REFRESH_RATE)
+
+print("Max iterations reached. Exiting loop.")
