@@ -9,7 +9,7 @@ from PIL import Image
 from gpiozero import Device
 
 # User Config
-REFRESH_RATE = 1
+REFRESH_RATE = 0.5
 HIST_SIZE = 61
 PLOT_CONFIG = [
     {
@@ -99,8 +99,19 @@ def update_data():
 
     cpu_temps = [shwtemp.current for shwtemp in psutil.sensors_temperatures().get('cpu_thermal', [])]
     y_data[1].append(cpu_temps)
-    print("Data Updated")
-    sys.stdout.flush()  # Flush the output buffer
+    # Print statements for debugging
+    print(f"CPU Percentages: {cpu_percs}")
+    print(f"CPU Temperatures: {cpu_temps}")
+
+    # Check if data is within y-axis limits
+    for plot, limits in enumerate(PLOT_CONFIG):
+        if 'ylim' in limits:
+            for index, data_point in enumerate([cpu_percs, cpu_temps]):
+                if not limits['ylim'][0] <= data_point <= limits['ylim'][1]:
+                    print(f"Warning: Data point {data_point} is outside the y-axis limits for Plot {plot + 1}, Line {index + 1}")
+
+    sys.stdout.flush()
+
 
 def update_plot():
     # update lines with latest data
@@ -118,6 +129,7 @@ def update_plot():
     # transfer into PIL image and display
     image = Image.frombytes('RGBA', canvas.get_width_height(), canvas.buffer_rgba())
     print("Plot Updated")
+    print(f"Image Dimensions: {image.size}")
     sys.stdout.flush()  # Flush the output buffer
     disp.image(image)
 
