@@ -1,4 +1,5 @@
 from collections import deque
+import sys
 import psutil
 import board
 import digitalio
@@ -30,7 +31,7 @@ PLOT_CONFIG = [
     }
 ]
 
-CPU_COUNT = 4
+CPU_COUNT = len(psutil.cpu_percent(interval=REFRESH_RATE, percpu=True))
 
 # Setup X data storage
 x_time = [x * REFRESH_RATE for x in range(HIST_SIZE)]
@@ -111,9 +112,6 @@ def update_data():
                 if not (limit_min <= float(data_point) <= limit_max):
                     print(f"Warning: Data point {data_point} is outside the y-axis limits for Plot {plot + 1}, Line {index + 1}")
 
-
-    sys.stdout.flush()
-
 def update_plot():
     # update lines with latest data
     for plot, lines in enumerate(plot_lines):
@@ -137,6 +135,7 @@ try:
     while True:
         update_data()
         update_plot()
+        sys.stdout.flush()  # Moved it here
 except KeyboardInterrupt:
     print("Loop interrupted by user.")
 finally:
