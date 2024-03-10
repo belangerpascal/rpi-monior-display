@@ -107,9 +107,9 @@ def update_data():
     # Check if data is within y-axis limits
     for plot, limits in enumerate(PLOT_CONFIG):
         if 'ylim' in limits:
-            for index, data_point in enumerate([cpu_percs, cpu_temps[index]]):
-                if not limits['ylim'][0] <= data_point <= limits['ylim'][1]:
-                    print(f"Warning: Data point {data_point} is outside the y-axis limits for Plot {plot + 1}, Line {index + 1}")
+            for index, data_point in enumerate([cpu_percs, cpu_temps]):
+                if not limits['ylim'][0] <= data_point[index] <= limits['ylim'][1]:
+                    print(f"Warning: Data point {data_point[index]} is outside the y-axis limits for Plot {plot + 1}, Line {index + 1}")
 
     sys.stdout.flush()
 
