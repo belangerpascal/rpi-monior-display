@@ -128,6 +128,9 @@ def update_plot():
     canvas.draw()
     # transfer into PIL image and display
     image = Image.frombytes('RGBA', canvas.get_width_height(), canvas.buffer_rgba())
+    # Resize image if necessary
+    if image.size != (disp.width, disp.height):
+        image = image.resize((disp.width, disp.height))
     print("Plot Updated")
     disp.image(image)
 
