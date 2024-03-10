@@ -115,24 +115,38 @@ def update_data():
 
 
 def update_plot():
-    # update lines with latest data
+    global iteration_count
+
+    # Update lines with the latest data
     for plot, lines in enumerate(plot_lines):
         for index, line in enumerate(lines):
             line.set_ydata(y_data[plot][index])
-        # autoscale if not specified
+        # Autoscale if not specified
         if 'ylim' not in PLOT_CONFIG[plot].keys():
             ax[plot].relim()
             ax[plot].autoscale_view()
-    # draw the plots
+
+    # Draw the plots
     canvas = plt.get_current_fig_manager().canvas
     plt.tight_layout()
     canvas.draw()
-    # transfer into PIL image and display
+
+    # Transfer into PIL image and display
     image = Image.frombytes('RGBA', canvas.get_width_height(), canvas.buffer_rgba())
-    print("Plot Updated")
+    print(f"Plot Updated - Iteration: {iteration_count}")
     print(f"Image Dimensions: {image.size}")
     sys.stdout.flush()  # Flush the output buffer
     disp.image(image)
+
+    # Pause before clearing the screen
+    plt.pause(2.0)
+
+    # Clear the screen after displaying one plot
+    disp.fill(0)
+    disp.show()
+
+    # Increment iteration count
+    iteration_count += 1
 
 MAX_ITERATIONS = 1000
 iteration_count = 0
@@ -142,8 +156,6 @@ try:
     while iteration_count < MAX_ITERATIONS:
         update_data()
         update_plot()
-        print(iteration_count)
-        iteration_count += 1
 except KeyboardInterrupt:
     print("Loop interrupted by user.")
 finally:
