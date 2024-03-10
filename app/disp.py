@@ -97,7 +97,8 @@ def update_plot():
                 draw.line(points, fill=color, width=width)
 
     # Display the updated image
-    disp.image(image, rotation=90, x_offset=20, y_offset=0)
+    disp.image(image)
+
 
 try:
     print("Looping")
