@@ -133,12 +133,13 @@ def update_plot():
 MAX_ITERATIONS = 1000
 iteration_count = 0
 
-print("looping")
-while iteration_count < MAX_ITERATIONS:
-    update_data()
-    update_plot()
-    iteration_count += 1
-    # Add a delay to control the update rate
-    time.sleep(REFRESH_RATE)
-
-print("Max iterations reached. Exiting loop.")
+try:
+    print("looping")
+    while iteration_count < MAX_ITERATIONS:
+        update_data()
+        update_plot()
+        iteration_count += 1
+except KeyboardInterrupt:
+    print("Loop interrupted by user.")
+finally:
+    print("Exiting program.")
