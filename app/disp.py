@@ -1,5 +1,4 @@
 from collections import deque
-import sys
 import psutil
 import board
 import digitalio
@@ -108,8 +107,10 @@ def update_data():
     for plot, limits in enumerate(PLOT_CONFIG):
         if 'ylim' in limits:
             for index, data_point in enumerate(cpu_percs if plot == 0 else cpu_temps):
-                if not limits['ylim'][0] <= data_point <= limits['ylim'][1]:
+                limit_min, limit_max = limits['ylim']
+                if not (limit_min <= float(data_point) <= limit_max):
                     print(f"Warning: Data point {data_point} is outside the y-axis limits for Plot {plot + 1}, Line {index + 1}")
+
 
     sys.stdout.flush()
 
