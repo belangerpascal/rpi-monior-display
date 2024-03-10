@@ -6,7 +6,6 @@ WORKDIR /opt/app/
 COPY /app/requirements.txt ./
 COPY /app/disp.py ./
 
-RUN apk add --update alpine-sdk
 RUN pip install --upgrade -r requirements.txt
 RUN pip3 install --upgrade adafruit-python-shell
 RUN wget https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/raspi-blinka.py
