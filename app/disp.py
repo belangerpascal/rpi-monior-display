@@ -3,7 +3,7 @@ import psutil
 # Blinka CircuitPython
 import board
 import digitalio
-import adafruit_rgb_display.ST7789 as ST7789
+from adafruit_rgb_display.st7789 import ST7789
 # Matplotlib
 import matplotlib.pyplot as plt
 # Python Imaging Library
@@ -69,7 +69,7 @@ y_data = [ [deque([None] * HIST_SIZE, maxlen=HIST_SIZE) for _ in plot['line_conf
          ]
 
 # Setup display
-disp = st7789.ST7789(board.SPI(), height=280, width=240, y_offset=20, rotation=0,
+disp = ST7789(board.SPI(), height=280, width=240, y_offset=20, rotation=0,
                      baudrate=40000000,
                      cs=digitalio.DigitalInOut(board.CE0),
                      dc=digitalio.DigitalInOut(board.D25),
