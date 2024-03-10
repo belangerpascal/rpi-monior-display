@@ -30,7 +30,7 @@ PLOT_CONFIG = [
     }
 ]
 
-CPU_COUNT = 1
+CPU_COUNT = 4
 
 # Setup X data storage
 x_time = [x * REFRESH_RATE for x in range(HIST_SIZE)]
