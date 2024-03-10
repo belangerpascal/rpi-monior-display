@@ -46,10 +46,10 @@ y_data = [
 # Setup display
 disp = ST7789(
     board.SPI(),
-    height=240,
-    width=280,
+    height=280,
+    width=240,
     y_offset=20,
-    rotation=90,
+    rotation=0,
     baudrate=40000000,
     cs=digitalio.DigitalInOut(board.CE0),
     dc=digitalio.DigitalInOut(board.D25),
