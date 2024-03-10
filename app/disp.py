@@ -114,7 +114,7 @@ def update_data():
                     print(f"Y-axis limits: {limit_min} to {limit_max}")
 
 def update_plot():
-    # update lines with latest data
+    # update lines with the latest data
     for plot, lines in enumerate(plot_lines):
         for index, line in enumerate(lines):
             line.set_ydata(y_data[plot][index])
@@ -124,15 +124,15 @@ def update_plot():
     canvas.draw()
     # transfer into PIL image
     image = Image.frombytes('RGBA', canvas.get_width_height(), canvas.buffer_rgba())
-    
-    # Resize image if necessary
-    if image.size != (disp.width, disp.height):
+
+    # Ensure the image does not exceed display dimensions
+    if image.width > disp.width or image.height > disp.height:
         image = image.resize((disp.width, disp.height))
-    
+
     # display the image
     disp.image(image)
-    
-    # update plot after displaying image
+
+    # update the plot after displaying the image
     for plot, lines in enumerate(plot_lines):
         for index, line in enumerate(lines):
             line.set_ydata(y_data[plot][index])
@@ -142,6 +142,7 @@ def update_plot():
             ax[plot].autoscale_view()
     plt.draw()
     print("Plot Updated")
+
 
 
 try:
