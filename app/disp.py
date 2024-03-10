@@ -125,30 +125,28 @@ def update_plot():
     # transfer into PIL image
     image = Image.frombytes('RGBA', canvas.get_width_height(), canvas.buffer_rgba())
 
-    # Resize image if necessary
-    if image.width != disp.width or image.height != disp.height:
-        image = image.resize((disp.width, disp.height), Image.ANTIALIAS)
+    # Print image size for debugging
+    print(f"Original Image Size: {image.width}x{image.height}, Display Size: {disp.width}x{disp.height}")
 
-    # Create a new blank image with the correct dimensions
-    new_image = Image.new("RGBA", (disp.width, disp.height), (0, 0, 0, 255))
-    new_image.paste(image, ((disp.width - image.width) // 2, (disp.height - image.height) // 2))
+    # Ensure the image does not exceed display dimensions
+    if image.width > disp.width or image.height > disp.height:
+        new_image = image.resize((disp.width, disp.height), Image.BICUBIC)
+        print(f"Resized Image Size: {new_image.width}x{new_image.height}, Display Size: {disp.width}x{disp.height}")
 
-    # Resize the new image to match the display dimensions
-    new_image = new_image.resize((disp.width, disp.height), Image.BICUBIC)
+        # display the resized image
+        disp.image(new_image)
 
-    # display the image
-    disp.image(new_image)
+        # update the plot after displaying the image
+        for plot, lines in enumerate(plot_lines):
+            for index, line in enumerate(lines):
+                line.set_ydata(y_data[plot][index])
+            # autoscale if not specified
+            if 'ylim' not in PLOT_CONFIG[plot].keys():
+                ax[plot].relim()
+                ax[plot].autoscale_view()
+        plt.draw()
+        print("Plot Updated")
 
-    # update the plot after displaying the image
-    for plot, lines in enumerate(plot_lines):
-        for index, line in enumerate(lines):
-            line.set_ydata(y_data[plot][index])
-        # autoscale if not specified
-        if 'ylim' not in PLOT_CONFIG[plot].keys():
-            ax[plot].relim()
-            ax[plot].autoscale_view()
-    plt.draw()
-    print("Plot Updated")
 
 try:
     print("Looping")
