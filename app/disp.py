@@ -124,6 +124,7 @@ try:
     while iteration_count < MAX_ITERATIONS:
         update_data()
         update_plot()
+        print(iteration_count)
         iteration_count += 1
 except KeyboardInterrupt:
     print("Loop interrupted by user.")
