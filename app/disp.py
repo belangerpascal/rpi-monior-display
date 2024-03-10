@@ -46,10 +46,10 @@ y_data = [
 # Setup display
 disp = ST7789(
     board.SPI(),
-    height=280,
-    width=240,
+    height=240,
+    width=280,
     y_offset=20,
-    rotation=0,
+    rotation=90,
     baudrate=40000000,
     cs=digitalio.DigitalInOut(board.CE0),
     dc=digitalio.DigitalInOut(board.D25),
@@ -97,7 +97,7 @@ def update_plot():
                 draw.line(points, fill=color, width=width)
 
     # Display the updated image
-    disp.image(image)
+    disp.image(image, rotation=90, x_offset=20, y_offset=0)
 
 try:
     print("Looping")
