@@ -98,6 +98,7 @@ def update_data():
 
     cpu_temps = [shwtemp.current for shwtemp in psutil.sensors_temperatures().get('cpu_thermal', [])]
     y_data[1].append(cpu_temps)
+    print("Data Updated")
 
 def update_plot():
     # update lines with latest data
@@ -114,6 +115,7 @@ def update_plot():
     canvas.draw()
     # transfer into PIL image and display
     image = Image.frombytes('RGBA', canvas.get_width_height(), canvas.buffer_rgba())
+    print("Plot Updated")
     disp.image(image)
 
 MAX_ITERATIONS = 1000
