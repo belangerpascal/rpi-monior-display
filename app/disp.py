@@ -126,11 +126,15 @@ def update_plot():
     image = Image.frombytes('RGBA', canvas.get_width_height(), canvas.buffer_rgba())
 
     # Resize image if necessary
-    if image.size != (disp.width, disp.height):
-        image = image.resize((disp.width, disp.height))
+    if image.width != disp.width or image.height != disp.height:
+        image = image.resize((disp.width, disp.height), Image.ANTIALIAS)
+
+    # Create a new blank image with the correct dimensions
+    new_image = Image.new("RGBA", (disp.width, disp.height), (0, 0, 0, 255))
+    new_image.paste(image, ((disp.width - image.width) // 2, (disp.height - image.height) // 2))
 
     # display the image
-    disp.image(image)
+    disp.image(new_image)
 
     # update the plot after displaying the image
     for plot, lines in enumerate(plot_lines):
@@ -142,6 +146,7 @@ def update_plot():
             ax[plot].autoscale_view()
     plt.draw()
     print("Plot Updated")
+
 
 
 
