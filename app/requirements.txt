@@ -6,4 +6,4 @@ board
 gpiod
 numpy
 gpiozero
-#pygame
+time

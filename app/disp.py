@@ -7,6 +7,7 @@ from adafruit_rgb_display.st7789 import ST7789
 import matplotlib.pyplot as plt
 from PIL import Image
 from gpiozero import Device
+import time
 
 # User Config
 REFRESH_RATE = 0.05
@@ -143,7 +144,8 @@ def update_plot():
 
     # Clear the screen after displaying one plot
     disp.fill(0)
-    disp.show()
+    time.sleep(0.1)  # Introduce a small delay
+    disp.image(image)  # Display a blank image to clear the screen
 
     # Increment iteration count
     iteration_count += 1
