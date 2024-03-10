@@ -112,7 +112,6 @@ def update_data():
                 if not (limit_min <= float(data_point) <= limit_max):
                     print(f"Warning: Data point {data_point} is outside the y-axis limits for Plot {plot + 1}, Line {index + 1}")
                     print(f"Y-axis limits: {limit_min} to {limit_max}")
-
 def update_plot():
     # update lines with the latest data
     for plot, lines in enumerate(plot_lines):
@@ -127,20 +126,10 @@ def update_plot():
 
     # Ensure the image does not exceed display dimensions
     if image.width > disp.width or image.height > disp.height:
-        # Resize image while maintaining the aspect ratio
-        ratio = min(disp.width / image.width, disp.height / image.height)
-        new_size = (int(image.width * ratio), int(image.height * ratio))
-        new_image = image.resize(new_size, Image.BICUBIC)
-
-        # Create a blank image with display dimensions
-        display_image = Image.new("RGBA", (disp.width, disp.height), (0, 0, 0, 0))
-
-        # Paste the resized image onto the blank image
-        offset = ((disp.width - new_image.width) // 2, (disp.height - new_image.height) // 2)
-        display_image.paste(new_image, offset)
-
-        # display the image
-        disp.image(display_image)
+        # Crop or pad the image to fit the display dimensions
+        new_image = Image.new("RGBA", (disp.width, disp.height), (0, 0, 0, 0))
+        new_image.paste(image, ((disp.width - image.width) // 2, (disp.height - image.height) // 2))
+        disp.image(new_image)
     else:
         disp.image(image)
 
@@ -154,6 +143,7 @@ def update_plot():
             ax[plot].autoscale_view()
     plt.draw()
     print("Plot Updated")
+
 
 
 
