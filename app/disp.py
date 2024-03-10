@@ -132,6 +132,9 @@ def update_plot():
     if image.width > disp.width or image.height > disp.height:
         image = image.resize((disp.width, disp.height))
 
+    # Print resized image size for debugging
+    print(f"Resized Image Size: {image.width}x{image.height}, Display Size: {disp.width}x{disp.height}")
+
     # display the image
     disp.image(image)
 
@@ -145,6 +148,7 @@ def update_plot():
             ax[plot].autoscale_view()
     plt.draw()
     print("Plot Updated")
+
 
 
 
