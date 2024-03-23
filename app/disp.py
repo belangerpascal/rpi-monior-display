@@ -75,10 +75,10 @@ ax.grid(True, linestyle=':')
 ax.set_xlim(min(x_time), max(x_time))
 ax.invert_xaxis()
 # Custom settings
-if 'title' in PLOT_CONFIG_CPU[plot]:
-    ax.set_title(PLOT_CONFIG_CPU[plot]['title'], position=(0.5, 0.8))
-if 'ylim' in PLOT_CONFIG_CPU[plot]:
-    ax.set_ylim(PLOT_CONFIG_CPU[plot]['ylim'])
+if 'title' in PLOT_CONFIG_CPU:
+    ax.set_title(PLOT_CONFIG_CPU['title'], position=(0.5, 0.8))
+if 'ylim' in PLOT_CONFIG_CPU:
+    ax.set_ylim(PLOT_CONFIG_CPU['ylim'])
 
 # Setup plot lines
 plot_lines = []
