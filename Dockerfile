@@ -5,8 +5,9 @@ WORKDIR /opt/app/
 
 COPY /app/requirements.txt ./
 COPY /app/disp.py ./
-RUN python -m venv .
+RUN python -m venv . --system-site-packages
 ENV PATH="/opt/app/bin:$PATH"
+ENV source ./bin/activate
 RUN pip install --upgrade -r requirements.txt
 
 CMD ["python", "disp.py"]
