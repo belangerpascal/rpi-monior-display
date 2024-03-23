@@ -3,8 +3,8 @@ import sys
 import psutil
 import board
 import digitalio
-from adafruit_rgb_display import st7789
-#from adafruit_rgb_display.st7789 import ST7789
+#from adafruit_rgb_display import st7789
+from adafruit_rgb_display.st7789 import ST7789
 import matplotlib.pyplot as plt
 from PIL import Image
 from gpiozero import Device
@@ -51,7 +51,7 @@ y_data = [
 #    c=digitalio.DigitalInOut(board.D25),
 #    rst=digitalio.DigitalInOut(board.D27)
 #)
-disp = st7789.ST7789(board.SPI(), height=280, width=280, y_offset=20, rotation=90,
+disp = ST7789(board.SPI(), height=280, width=280, y_offset=20, rotation=90,
                      baudrate=40000000,
                      cs=digitalio.DigitalInOut(board.CE0),
                      dc=digitalio.DigitalInOut(board.D25),
