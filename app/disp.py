@@ -12,7 +12,7 @@ import time
 # User Config
 REFRESH_RATE = 0.05
 HIST_SIZE = 61
-PLOT_CONFIG = [
+PLOT_CONFIG_CPU = [
     {
         'title': 'LOAD',
         'ylim': (0, 100),
@@ -21,13 +21,6 @@ PLOT_CONFIG = [
             {'color': '#0060FF', 'width': 2},
             {'color': '#00FF60', 'width': 2},
             {'color': '#60FF00', 'width': 2},
-        ]
-    },
-    {
-        'title': 'TEMP',
-        'ylim': (20, 50),
-        'line_config': [
-            {'color': '#FF0000', 'width': 2},
         ]
     }
 ]
@@ -41,7 +34,7 @@ x_time.reverse()
 # Setup Y data storage
 y_data = [
     [deque([None] * HIST_SIZE, maxlen=HIST_SIZE) for _ in plot['line_config']]
-    for plot in PLOT_CONFIG
+    for plot in PLOT_CONFIG_CPU
 ]
 
 # Setup display
@@ -59,7 +52,7 @@ disp = ST7789(
 
 # Setup plot figure
 plt.style.use('dark_background')
-fig, ax = plt.subplots(2, 1, figsize=(disp.width / 100, disp.height / 100))
+fig, ax = plt.subplots(1, 1, figsize=(disp.width / 100, disp.height / 100))
 
 # Setup plot axis
 ax[0].xaxis.set_ticklabels([])
@@ -98,60 +91,30 @@ def update_data():
     cpu_percs = psutil.cpu_percent(interval=REFRESH_RATE, percpu=True)
     y_data[0].append(cpu_percs)
 
-    cpu_temps = [shwtemp.current for shwtemp in psutil.sensors_temperatures().get('cpu_thermal', [])]
-    y_data[1].append(cpu_temps)
+    # cpu_temps = [shwtemp.current for shwtemp in psutil.sensors_temperatures().get('cpu_thermal', [])]
+    # y_data[1].append(cpu_temps)
 
     # Print statements for debugging
     print(f"CPU Percentages: {cpu_percs}")
-    print(f"CPU Temperatures: {cpu_temps}")
-
-    # Check if data is within y-axis limits
-    for plot, limits in enumerate(PLOT_CONFIG):
-        if 'ylim' in limits:
-            for index, data_point in enumerate(cpu_percs if plot == 0 else cpu_temps):
-                if not limits['ylim'][0] <= data_point <= limits['ylim'][1]:
-                    print(f"Warning: Data point {data_point} is outside the y-axis limits for Plot {plot + 1}, Line {index + 1}")
-
-    sys.stdout.flush()
-
+    # print(f"CPU Temperatures: {cpu_temps}")
 
 def update_plot():
-    global iteration_count
-
-    # Update lines with the latest data
+    # update lines with latest data
     for plot, lines in enumerate(plot_lines):
         for index, line in enumerate(lines):
             line.set_ydata(y_data[plot][index])
-        # Autoscale if not specified
+        # autoscale if not specified
         if 'ylim' not in PLOT_CONFIG[plot].keys():
             ax[plot].relim()
             ax[plot].autoscale_view()
-
-    # Draw the plots
+    # draw the plots
     canvas = plt.get_current_fig_manager().canvas
     plt.tight_layout()
     canvas.draw()
-
-    # Transfer into PIL image and display
-    image = Image.frombytes('RGBA', canvas.get_width_height(), canvas.buffer_rgba())
-    print(f"Plot Updated - Iteration: {iteration_count}")
-    print(f"Image Dimensions: {image.size}")
-    sys.stdout.flush()  # Flush the output buffer
+    # transfer into PIL image and display
+    image = Image.frombytes('RGB', canvas.get_width_height(),
+                            canvas.tostring_rgb())
     disp.image(image)
-
-    # Pause before clearing the screen
-    plt.pause(2.0)
-
-    # Clear the screen after displaying one plot
-    disp.fill(0)
-    time.sleep(0.1)  # Introduce a small delay
-    disp.image(image)  # Display a blank image to clear the screen
-
-    # Increment iteration count
-    iteration_count += 1
-
-MAX_ITERATIONS = 1000
-iteration_count = 0
 
 try:
     print("Looping")
