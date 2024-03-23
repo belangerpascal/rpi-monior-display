@@ -7,3 +7,5 @@ services:
       - /proc:/proc
       - /lib/modules:/lib/modules
       - /sys:/sys
+    deploy:
+      mode: global
