@@ -70,15 +70,15 @@ ax.xaxis.set_ticklabels([])
 #        a.set_ylim(PLOT_CONFIG_CPU[plot]['ylim'])
 
 # Add grid to all plots
-a.grid(True, linestyle=':')
+ax.grid(True, linestyle=':')
 # Limit and invert x time axis
-a.set_xlim(min(x_time), max(x_time))
-a.invert_xaxis()
+ax.set_xlim(min(x_time), max(x_time))
+ax.invert_xaxis()
 # Custom settings
 if 'title' in PLOT_CONFIG_CPU[plot]:
-    a.set_title(PLOT_CONFIG_CPU[plot]['title'], position=(0.5, 0.8))
+    ax.set_title(PLOT_CONFIG_CPU[plot]['title'], position=(0.5, 0.8))
 if 'ylim' in PLOT_CONFIG_CPU[plot]:
-    a.set_ylim(PLOT_CONFIG_CPU[plot]['ylim'])
+    ax.set_ylim(PLOT_CONFIG_CPU[plot]['ylim'])
 
 # Setup plot lines
 plot_lines = []
