@@ -52,21 +52,33 @@ disp = ST7789(
 
 # Setup plot figure
 plt.style.use('dark_background')
-fig, ax = plt.subplots(1, 1, figsize=(disp.width / 100, disp.height / 100))
+# fig, ax = plt.subplots(1, 1, figsize=(disp.width / 100, disp.height / 100))
+fig, ax = plt.subplots()
 
 # Setup plot axis
-ax[0].xaxis.set_ticklabels([])
-for plot, a in enumerate(ax):
-    # Add grid to all plots
-    a.grid(True, linestyle=':')
-    # Limit and invert x time axis
-    a.set_xlim(min(x_time), max(x_time))
-    a.invert_xaxis()
-    # Custom settings
-    if 'title' in PLOT_CONFIG_CPU[plot]:
-        a.set_title(PLOT_CONFIG_CPU[plot]['title'], position=(0.5, 0.8))
-    if 'ylim' in PLOT_CONFIG_CPU[plot]:
-        a.set_ylim(PLOT_CONFIG_CPU[plot]['ylim'])
+ax.xaxis.set_ticklabels([])
+#for plot, a in enumerate(ax):
+#    # Add grid to all plots
+#    a.grid(True, linestyle=':')
+#    # Limit and invert x time axis
+#    a.set_xlim(min(x_time), max(x_time))
+#    a.invert_xaxis()
+#    # Custom settings
+#    if 'title' in PLOT_CONFIG_CPU[plot]:
+#        a.set_title(PLOT_CONFIG_CPU[plot]['title'], position=(0.5, 0.8))
+#    if 'ylim' in PLOT_CONFIG_CPU[plot]:
+#        a.set_ylim(PLOT_CONFIG_CPU[plot]['ylim'])
+
+# Add grid to all plots
+a.grid(True, linestyle=':')
+# Limit and invert x time axis
+a.set_xlim(min(x_time), max(x_time))
+a.invert_xaxis()
+# Custom settings
+if 'title' in PLOT_CONFIG_CPU[plot]:
+    a.set_title(PLOT_CONFIG_CPU[plot]['title'], position=(0.5, 0.8))
+if 'ylim' in PLOT_CONFIG_CPU[plot]:
+    a.set_ylim(PLOT_CONFIG_CPU[plot]['ylim'])
 
 # Setup plot lines
 plot_lines = []
