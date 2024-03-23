@@ -121,11 +121,14 @@ def update_plot():
 
 try:
     print("Looping")
-    update_data()
-    update_plot()
+    while True:
+        update_data()
+        update_plot()
+        time.sleep(REFRESH_RATE)
 except KeyboardInterrupt:
     print("Loop interrupted by user.")
 finally:
     if Device.pin_factory is not None:
         Device.pin_factory.reset()
+    print("Exiting program.")
     print("Exiting program.")
