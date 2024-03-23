@@ -63,14 +63,14 @@ for plot, a in enumerate(ax):
     a.set_xlim(min(x_time), max(x_time))
     a.invert_xaxis()
     # Custom settings
-    if 'title' in PLOT_CONFIG[plot]:
-        a.set_title(PLOT_CONFIG[plot]['title'], position=(0.5, 0.8))
-    if 'ylim' in PLOT_CONFIG[plot]:
-        a.set_ylim(PLOT_CONFIG[plot]['ylim'])
+    if 'title' in PLOT_CONFIG_CPU[plot]:
+        a.set_title(PLOT_CONFIG_CPU[plot]['title'], position=(0.5, 0.8))
+    if 'ylim' in PLOT_CONFIG_CPU[plot]:
+        a.set_ylim(PLOT_CONFIG_CPU[plot]['ylim'])
 
 # Setup plot lines
 plot_lines = []
-for plot, config in enumerate(PLOT_CONFIG):
+for plot, config in enumerate(PLOT_CONFIG_CPU):
     lines = []
     for index, line_config in enumerate(config['line_config']):
         # create line
