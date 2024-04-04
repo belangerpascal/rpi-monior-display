@@ -9,4 +9,4 @@ RUN python -m venv . --system-site-packages
 ENV PATH="/opt/app/bin:$PATH"
 RUN pip install --upgrade -r requirements.txt
 
-CMD ["venv/bin/activate", "python", "disp.py"]
+CMD ["python", "disp.py"]
