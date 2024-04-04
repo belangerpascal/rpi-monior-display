@@ -9,7 +9,7 @@ adafruit-circuitpython-framebuf
 matplotlib
 Pillow
 adafruit-circuitpython-rgb-display
-board
+adafruit-blinka
 gpiod
 numpy
 gpiozero
