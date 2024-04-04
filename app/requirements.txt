@@ -1,4 +1,11 @@
+headless-kivy-pi
+kivy
+kivy-garden.graph
 psutil
+luma.core
+luma.lcd
+#pyqtgraph
+adafruit-circuitpython-framebuf
 matplotlib
 Pillow
 adafruit-circuitpython-rgb-display
@@ -6,3 +13,4 @@ board
 gpiod
 numpy
 gpiozero
+docker
