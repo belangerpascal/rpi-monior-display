@@ -5,5 +5,5 @@ Pillow
 adafruit-circuitpython-rgb-display
 adafruit-blinka
 gpiod
-#gpiozero
+gpiozero
 docker
