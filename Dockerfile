@@ -3,8 +3,7 @@ LABEL org.opencontainers.image.source https://github.com/belangerpascal/rpi-moni
 
 WORKDIR /opt/app/
 
-COPY /app/requirements.txt ./
-COPY /app/disp.py ./
+COPY /app/* ./
 RUN python -m venv . --system-site-packages
 ENV PATH="/opt/app/bin:$PATH"
 RUN pip install --upgrade -r requirements.txt
