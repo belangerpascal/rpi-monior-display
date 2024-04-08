@@ -4,6 +4,8 @@ LABEL org.opencontainers.image.source https://github.com/belangerpascal/rpi-moni
 WORKDIR /opt/app/
 
 COPY /app/* ./
+RUN apt update
+RUN apt install -y gpiod libgpiod2
 RUN python -m venv . --system-site-packages
 ENV PATH="/opt/app/bin:$PATH"
 ENV GPIOZERO_PIN_FACTORY=lgpio
