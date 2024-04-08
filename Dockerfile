@@ -8,7 +8,7 @@ RUN apt update
 RUN apt install -y gpiod libgpiod2
 RUN python -m venv . --system-site-packages
 ENV PATH="/opt/app/bin:$PATH"
-ENV GPIOZERO_PIN_FACTORY=lgpio
+#ENV GPIOZERO_PIN_FACTORY=lgpio
 RUN pip install --upgrade -r requirements.txt
 
 CMD ["python", "disp.py"]
