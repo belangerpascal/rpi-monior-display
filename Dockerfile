@@ -5,7 +5,7 @@ WORKDIR /opt/app/
 
 COPY /app/* ./
 RUN apt update
-RUN apt install -y gpiod python3-libgpiod
+RUN apt install -y gpiod python3-libgpiod fonts-courier-prime
 #RUN python -m venv . --system-site-packages
 RUN python -m venv .
 ENV PATH="/opt/app/bin:$PATH"
