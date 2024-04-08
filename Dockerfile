@@ -6,6 +6,7 @@ WORKDIR /opt/app/
 COPY /app/* ./
 RUN python -m venv . --system-site-packages
 ENV PATH="/opt/app/bin:$PATH"
+ENV GPIOZERO_PIN_FACTORY="native python3"
 RUN pip install --upgrade -r requirements.txt
 
 CMD ["python", "disp.py"]
