@@ -4,7 +4,7 @@ matplotlib
 Pillow
 adafruit-circuitpython-rgb-display
 adafruit-blinka
-#lgpio
-#gpiod
+lgpio
+gpiod
 gpiozero
 docker
