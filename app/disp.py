@@ -8,7 +8,7 @@ from adafruit_rgb_display.st7789 import ST7789
 import matplotlib.pyplot as plt
 plt.style.use('ggplot')  # Use the 'ggplot' style
 from PIL import Image, ImageDraw, ImageFont
-from gpiozero import Device, Button
+from gpiozero import Device, Button, PWMLED
 import time
 import socket
 import platform
@@ -26,10 +26,18 @@ pin7 = Button(4)
 
 button_state = 0
 
-# Turn on the Backlight
-backlight = digitalio.DigitalInOut(board.D18)
-backlight.switch_to_output()
-backlight.value = False
+backlight_pin = digitalio.DigitalInOut(board.D18)
+backlight = PWMLED(backlight_pin)
+
+def set_backlight_intensity(intensity):
+    # Check that the intensity is within the valid range
+    if 0 <= intensity <= 1:
+        backlight.value = intensity
+    else:
+        print("Error: Intensity must be between 0 and 1")
+
+# Now you can control the backlight intensity by calling the function
+# For example, to set the backlight intensity to 50%
 
 # User Config
 REFRESH_RATE = 0.033
@@ -195,17 +203,17 @@ def update_data_disk():
         # Display the image in the bottom right corner
         buffer1.paste(small_active_image, (210, 170))
         # Turn on the backlight
-        backlight.value = True
+        set_backlight_intensity(0.5)
     else:
         # If the disk is idle, turn off the backlight
-        backlight.value = False
+        set_backlight_intensity(0.25)
 
     # Display the buffer
     disp.image(buffer1)
 
     # Update the previous disk activity counters
     prev_disk_activity = disk_activity
-    backlight.value = False
+    set_backlight_intensity(0.25)
 
 def update_plot():
     global draw1, draw2, buffer1, buffer2, button_state
