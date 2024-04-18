@@ -27,7 +27,7 @@ pin7 = Button(4)
 button_state = 0
 
 # Turn on the Backlight
-backlight = digitalio(board.D12)
+backlight = digitalio.DigitalInOut(board.D12)
 backlight.switch_to_output()
 backlight.value = True
 
