@@ -206,14 +206,14 @@ def update_data_disk():
         set_backlight_intensity(0.5)
     else:
         # If the disk is idle, turn off the backlight
-        set_backlight_intensity(0.25)
+        set_backlight_intensity(0.5)
 
     # Display the buffer
     disp.image(buffer1)
 
     # Update the previous disk activity counters
     prev_disk_activity = disk_activity
-    set_backlight_intensity(0.25)
+    set_backlight_intensity(0.5)
 
 def update_plot():
     global draw1, draw2, buffer1, buffer2, button_state
