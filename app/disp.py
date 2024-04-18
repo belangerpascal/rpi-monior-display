@@ -29,7 +29,7 @@ button_state = 0
 # Turn on the Backlight
 backlight = digitalio.DigitalInOut(board.D12)
 backlight.switch_to_output()
-backlight.value = True
+backlight.value = False
 
 # User Config
 REFRESH_RATE = 0.033
@@ -205,6 +205,7 @@ def update_data_disk():
 
     # Update the previous disk activity counters
     prev_disk_activity = disk_activity
+    backlight.value = False
 
 def update_plot():
     global draw1, draw2, buffer1, buffer2, button_state
