@@ -16,8 +16,8 @@ import docker
 dockerClient = docker.DockerClient()
 
 # Load your images
-disk_active_image = Image.open('./b-square-active-240x280.png')
-disk_idle_image = Image.open('./b-square-idle-240x280.png')
+disk_active_image = Image.open('./b-square-active-240.png')
+disk_idle_image = Image.open('./b-square-idle-240.png')
 
 scroll_pos = 0
 
