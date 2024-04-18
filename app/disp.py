@@ -26,6 +26,11 @@ pin7 = Button(4)
 
 button_state = 0
 
+# Turn on the Backlight
+backlight = digitalio(board.D12)
+backlight.switch_to_output()
+backlight.value = True
+
 # User Config
 REFRESH_RATE = 0.033
 HIST_SIZE = 61
