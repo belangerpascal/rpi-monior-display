@@ -26,7 +26,7 @@ pin7 = Button(4)
 
 button_state = 0
 
-backlight_pin = digitalio.DigitalInOut(board.D18)
+backlight_pin = 18
 backlight = PWMLED(backlight_pin)
 
 def set_backlight_intensity(intensity):
