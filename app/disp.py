@@ -193,7 +193,7 @@ def update_data_disk():
         # Resize the image to 50x50 pixels
         small_active_image = disk_active_image.resize((50, 50))
         # Display the image in the bottom right corner
-        buffer1.paste(small_active_image, (230, 190))
+        buffer1.paste(small_active_image, (210, 170))
         # Turn on the backlight
         backlight.value = True
     else:
