@@ -190,10 +190,15 @@ def update_data_disk():
 
     # If the disk is active, display the active image
     if disk_activity.read_count > prev_disk_activity.read_count or disk_activity.write_count > prev_disk_activity.write_count:
-        buffer1.paste(disk_active_image, (0, 0))
+        # Resize the image to 50x50 pixels
+        small_active_image = disk_active_image.resize((50, 50))
+        # Display the image in the bottom right corner
+        buffer1.paste(small_active_image, (230, 190))
+        # Turn on the backlight
+        backlight.value = True
     else:
-        # If the disk is idle, display the idle image
-        buffer1.paste(disk_idle_image, (0, 0))
+        # If the disk is idle, turn off the backlight
+        backlight.value = False
 
     # Display the buffer
     disp.image(buffer1)
