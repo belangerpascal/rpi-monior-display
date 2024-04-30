@@ -8,3 +8,4 @@ lgpio
 gpiod
 gpiozero
 docker
+smbus
