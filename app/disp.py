@@ -12,6 +12,7 @@ from gpiozero import Device, Button, PWMLED
 import time
 import socket
 import platform
+import smbus
 import docker
 dockerClient = docker.DockerClient()
 
@@ -28,6 +29,13 @@ button_state = 0
 
 backlight_pin = 18
 backlight = PWMLED(backlight_pin)
+
+# Create an SMBus instance
+bus = smbus.SMBus(1)
+
+# CST816S I2C address
+CST816S_I2C_ADDR = 0x15
+
 
 def set_backlight_intensity(intensity):
     # Check that the intensity is within the valid range
@@ -79,7 +87,7 @@ y_data_temp = [
     for plot in PLOT_CONFIG_TEMP
 ]
 # Setup display
-disp = ST7789(board.SPI(), height=280, width=280, y_offset=20, rotation=90,
+disp = ST7789(board.SPI(), height=280, width=280, y_offset=20, rotation=270,
                      baudrate=40000000,
                      cs=digitalio.DigitalInOut(board.CE0),
                      dc=digitalio.DigitalInOut(board.D25),
@@ -103,6 +111,44 @@ buffer1 = Image.new('RGB', (280, 240))
 buffer2 = Image.new('RGB', (280, 240))
 draw1 = ImageDraw.Draw(buffer1)
 draw2 = ImageDraw.Draw(buffer2)
+
+class TouchScreen:
+    CST816S_I2C_ADDR = 0x15
+
+    def __init__(self):
+        self.i2c = smbus.SMBus(1)
+        self.X_point = 0
+        self.Y_point = 0
+
+    def Touch_Read_Byte(self, addr):
+        try:
+            return self.i2c.read_byte_data(self.CST816S_I2C_ADDR, addr)
+        except:
+            return 0
+
+    def get_point(self):
+        # Read the touch status
+        touch_status = self.Touch_Read_Byte(0x02)
+
+        # Only update the coordinates if a touch is registered
+        if touch_status == 0x01:  # Assuming 0x01 indicates a touch
+            xy_point = [0,0,0,0]
+
+            xy_point[0] = self.Touch_Read_Byte(0x03)
+            xy_point[1] = self.Touch_Read_Byte(0x04)
+            xy_point[2] = self.Touch_Read_Byte(0x05)
+            xy_point[3] = self.Touch_Read_Byte(0x06)
+
+            x_point= ((xy_point[0]&0x0f)<<8)+xy_point[1]
+            y_point= ((xy_point[2]&0x0f)<<8)+xy_point[3]
+
+            self.X_point=x_point
+            self.Y_point=y_point
+        else:
+            self.X_point = 0
+            self.Y_point = 0
+
+touchscreen = TouchScreen()
 
 def getContainers():
     containersReturn = []
@@ -222,12 +268,15 @@ def update_plot():
     buffer1, buffer2 = buffer2, buffer1
     draw1 = ImageDraw.Draw(buffer1)
 
-    # Check the state of GPIO pin 7
-    if pin7.is_pressed:  # is_pressed is True when the pin reads low
-        # If pin 7 is Low, toggle the button state
-        print("Button Pressed")
-        button_state = (button_state + 1) % 4  # This will cycle between 0, 1, and 2
-        time.sleep(0.5)  # Debounce the button press
+    # Check the state of the touch screen
+    touchscreen.get_point()
+    if touchscreen.X_point != 0 and touchscreen.Y_point != 0:  # Touch detected
+        print("Touch detected at ({}, {})".format(touchscreen.X_point, touchscreen.Y_point))
+        button_state = (button_state + 1) % 4  # This will cycle between 0, 1, 2, and 3
+        time.sleep(0.5)  # Debounce the touch input
+        # Reset the touch coordinates
+        touchscreen.X_point = 0
+        touchscreen.Y_point = 0
 
     if button_state == 0:
         update_data_disk()
